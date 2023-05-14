@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 import model.entities.CarRental;
 import model.entities.Vehicle;
+import model.service.BrazilTaxSercvice;
+import model.service.RentalService;
 
 public class ProgramVehicleLocator {
 
@@ -21,14 +23,27 @@ public class ProgramVehicleLocator {
 		System.out.print("Car model: ");
 		String carModel = sc.nextLine();
 		
-		System.out.print("Withdrawal dd/MM/yyyy hh:mm): ");
+		System.out.print("Withdrawal (dd/MM/yyyy hh:mm): ");
 		LocalDateTime start = LocalDateTime.parse(sc.nextLine(), dtf);
 	
-		System.out.print("Return dd/MM/yyyy hh:mm): ");
+		System.out.print("Return (dd/MM/yyyy hh:mm): ");
 		LocalDateTime finish = LocalDateTime.parse(sc.nextLine(), dtf);
 		
 		CarRental carRental = new CarRental(start, finish, new Vehicle(carModel));
 		
+		System.out.print("Enter price per hour: ");
+		double pricePerHour = sc.nextDouble();
+		System.out.print("Enter price per day: ");
+		double pricePerDay = sc.nextDouble();
+		
+		RentalService rentalService = new RentalService(pricePerHour, pricePerDay, new BrazilTaxSercvice());
+		
+		rentalService.processInvoice(carRental);
+		
+		System.out.println("Invoice: ");
+		System.out.println("Basic payment: " + String.format("%.2f", carRental.getInvoice().getBasicPayment()));
+		System.out.println("Tax: " + String.format("%.2f", carRental.getInvoice().getTax()));
+		System.out.println("Total payment: " + String.format("%.2f", carRental.getInvoice().getTotalPayment()));
 		
 		sc.close();
 	}
