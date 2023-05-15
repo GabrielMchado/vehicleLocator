@@ -23,10 +23,10 @@ public class ProgramVehicleLocator {
 		System.out.print("Car model: ");
 		String carModel = sc.nextLine();
 		
-		System.out.print("Withdrawal (dd/MM/yyyy hh:mm): ");
+		System.out.print("Lease start date (dd/MM/yyyy hh:mm): ");
 		LocalDateTime start = LocalDateTime.parse(sc.nextLine(), dtf);
 	
-		System.out.print("Return (dd/MM/yyyy hh:mm): ");
+		System.out.print("Lease return (dd/MM/yyyy hh:mm): ");
 		LocalDateTime finish = LocalDateTime.parse(sc.nextLine(), dtf);
 		
 		CarRental carRental = new CarRental(start, finish, new Vehicle(carModel));
@@ -40,10 +40,10 @@ public class ProgramVehicleLocator {
 		
 		rentalService.processInvoice(carRental);
 		
-		System.out.println("Invoice: ");
-		System.out.println("Basic payment: " + String.format("%.2f", carRental.getInvoice().getBasicPayment()));
-		System.out.println("Tax: " + String.format("%.2f", carRental.getInvoice().getTax()));
-		System.out.println("Total payment: " + String.format("%.2f", carRental.getInvoice().getTotalPayment()));
+		System.out.println("INVOICE: ");
+		System.out.println("Basic payment: $" + String.format("%.2f", carRental.getInvoice().getBasicPayment()));
+		System.out.println("Tax: $" + String.format("%.2f", carRental.getInvoice().getTax()));
+		System.out.println("Total payment: $" + String.format("%.2f", carRental.getInvoice().getTotalPayment()));
 		
 		sc.close();
 	}
